@@ -8,4 +8,8 @@ public class Astronaut {
         name = nameIn;
         game = gameIn;
     }
+
+    public String toString(){
+        return name;
+    }
 }
