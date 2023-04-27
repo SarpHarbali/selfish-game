@@ -4,9 +4,9 @@ public class Card {
     private String name;
     private String description;
 
-    public Card(String nameIn, String descriptionIn) {
-        name = nameIn;
-        description = descriptionIn;
+    public Card(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     @Override

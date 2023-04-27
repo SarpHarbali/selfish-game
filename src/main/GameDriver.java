@@ -1,3 +1,9 @@
+import java.io.Console;
+import java.util.ArrayList;
+
+import selfish.Astronaut;
+import selfish.GameEngine;
+
 public class GameDriver {
 
     /**
@@ -14,6 +20,24 @@ public class GameDriver {
     }
 
     public static void main(String[] args)  {
+        GameEngine ge = new GameEngine();
+        Console con = System.console();
+        ArrayList<Astronaut> players = new ArrayList<Astronaut>();
+        players.add(new Astronaut(con.readLine("Player 1 name: "), ge));
+        players.add(new Astronaut(con.readLine("Player 2 name: "), ge));
+        while (true) {
+            String another = con.readLine("Add another? Y or N: ");
+            if (another.equals("N")) {
+                break;
+            }
+            players.add(new Astronaut(con.readLine("New player name: "), ge));
+        }
+
+        for (Astronaut a:players) {
+            System.out.printf(a.toString());
+        }
+        
+
     }
 
 }

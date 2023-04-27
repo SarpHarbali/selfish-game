@@ -4,9 +4,9 @@ public class Astronaut {
     private String name;
     private GameEngine game;
 
-    public Astronaut(String nameIn, GameEngine gameIn) {
-        name = nameIn;
-        game = gameIn;
+    public Astronaut(String name, GameEngine game) {
+        this.name = name;
+        this.game = game;
     }
 
     public String toString(){
