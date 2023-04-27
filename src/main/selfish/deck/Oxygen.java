@@ -4,7 +4,7 @@ public class Oxygen extends Card{
     private int value;
 
     public Oxygen(int valueIn) {
-        super("Oxygen", "This is an oxygen card")
+        super("Oxygen", "This is an oxygen card");
         value = valueIn;
     }
 
