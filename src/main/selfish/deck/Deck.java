@@ -3,16 +3,11 @@ package selfish.deck;
 import selfish.GameException;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public abstract class Deck {
-
     private Collection<Card> cards;
-    protected Deck() {
-
-    }
+    protected Deck() {}
 
     protected static List<Card> loadCards(String path) throws GameException {
         List<Card> card_list = new ArrayList<>();
@@ -45,4 +40,6 @@ public abstract class Deck {
         }
         return card_array;
     }
+
+
 }
