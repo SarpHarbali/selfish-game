@@ -1,6 +1,11 @@
 package selfish.deck;
 
-public class Card {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Card implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 2157053851976390896L;
     private String name;
     private String description;
 

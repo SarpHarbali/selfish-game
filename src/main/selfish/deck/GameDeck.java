@@ -3,9 +3,13 @@ package selfish.deck;
 import selfish.GameException;
 
 import java.io.IOException;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class GameDeck extends Deck{
+public class GameDeck extends Deck implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 7533881621621413554L;
     private static String HACK_SUIT = "Hack suit";
     private static String HOLE_IN_SUIT = "Hole in suit";
     private static String LASER_BLAST = "Laser blast";

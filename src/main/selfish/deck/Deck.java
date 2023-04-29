@@ -5,7 +5,10 @@ import selfish.GameException;
 import java.io.*;
 import java.util.*;
 
-public abstract class Deck {
+public abstract class Deck implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8079217286616866017L;
     private Collection<Card> cards;
     protected Deck() {}
 
@@ -14,7 +17,7 @@ public abstract class Deck {
         try {
             File file = new File(path);
             BufferedReader br = new BufferedReader(new FileReader(file));
-
+            br.readLine();
             String line;
             while ((line = br.readLine()) != null) {
                 int length = stringToCards(line).length;

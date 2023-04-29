@@ -2,9 +2,13 @@ package selfish.deck;
 
 import selfish.GameException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class SpaceDeck extends Deck {
+public class SpaceDeck extends Deck implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 5685883857496540257L;
     private static String ASTEROID_FIELD = "Asteroid field";
     private static String BLANK_SPACE = "Blank space";
     private static String COSMIC_RADIATION = "Cosmic radiation";

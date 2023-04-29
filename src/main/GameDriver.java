@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import selfish.Astronaut;
 import selfish.GameEngine;
+import selfish.GameException;
 
 public class GameDriver {
 
@@ -19,8 +20,8 @@ public class GameDriver {
     public GameDriver() {
     }
 
-    public static void main(String[] args)  {
-        GameEngine ge = new GameEngine();
+    public static void main(String[] args) throws GameException {
+        GameEngine ge = new GameEngine(22234142, "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\ActionCards.txt", "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\SpaceCards.txt");
         Console con = System.console();
         ArrayList<Astronaut> players = new ArrayList<Astronaut>();
         players.add(new Astronaut(con.readLine("Player 1 name: "), ge));
