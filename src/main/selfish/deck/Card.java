@@ -14,7 +14,7 @@ public class Card {
         return name;
     }
 
-    public String getDiscription() {
+    public String getDescription() {
         return description;
     }
 }
