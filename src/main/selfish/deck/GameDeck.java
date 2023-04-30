@@ -11,17 +11,17 @@ import java.util.List;
 public class GameDeck extends Deck implements Serializable {
     @Serial
     public static final long serialVersionUID = 7533881621621413554L;
-    public static String HACK_SUIT = "Hack suit";
-    public static String HOLE_IN_SUIT = "Hole in suit";
-    public static String LASER_BLAST = "Laser blast";
-    public static String OXYGEN = "Oxygen";
-    public static String OXYGEN_1 = "Oxygen(1)";
-    public static String OXYGEN_2 = "Oxygen(2)";
-    public static String OXYGEN_SIPHON = "Oxygen syphon";
-    public static String ROCKET_BOOSTER = "Rocket booster";
-    public static String SHIELD = "Shield";
-    public static String TETHER = "Tether";
-    public static String TRACTOR_BEAM = "Tractor beam";
+    public static final String HACK_SUIT = "Hack suit";
+    public static final String HOLE_IN_SUIT = "Hole in suit";
+    public static final String LASER_BLAST = "Laser blast";
+    public static final String OXYGEN = "Oxygen";
+    public static final String OXYGEN_1 = "Oxygen(1)";
+    public static final String OXYGEN_2 = "Oxygen(2)";
+    public static final String OXYGEN_SIPHON = "Oxygen syphon";
+    public static final String ROCKET_BOOSTER = "Rocket booster";
+    public static final String SHIELD = "Shield";
+    public static final String TETHER = "Tether";
+    public static final String TRACTOR_BEAM = "Tractor beam";
 
     public GameDeck() {}
 
