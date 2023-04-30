@@ -6,9 +6,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-public class SpaceDeck extends Deck implements Serializable {
-    @Serial
-    public static final long serialVersionUID = 5685883857496540257L;
+public class SpaceDeck extends Deck {
     public static final String ASTEROID_FIELD = "Asteroid field";
     public static final String BLANK_SPACE = "Blank space";
     public static final String COSMIC_RADIATION = "Cosmic radiation";

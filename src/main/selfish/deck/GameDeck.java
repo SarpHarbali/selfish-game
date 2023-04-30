@@ -8,9 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameDeck extends Deck implements Serializable {
-    @Serial
-    public static final long serialVersionUID = 7533881621621413554L;
+public class GameDeck extends Deck {
+
     public static final String HACK_SUIT = "Hack suit";
     public static final String HOLE_IN_SUIT = "Hole in suit";
     public static final String LASER_BLAST = "Laser blast";

@@ -1,15 +1,15 @@
 package selfish.deck;
 
+import selfish.Astronaut;
 import selfish.GameException;
 
 import java.io.*;
 import java.util.*;
 
 public abstract class Deck implements Serializable {
-
     @Serial
     private static final long serialVersionUID = 8079217286616866017L;
-    private LinkedList<Card> cards = new LinkedList<>();
+    private Collection<Card> cards = new LinkedList<>();
 
     protected Deck() {}
 
@@ -46,19 +46,20 @@ public abstract class Deck implements Serializable {
     }
 
     public int add(Card card) {
-        cards.addFirst(card);
+
+        ((LinkedList<Card>)cards).addFirst(card);
         return cards.size();
     }
 
     protected int add(List<Card> cards) {
         for (Card card : cards) {
-            this.cards.addFirst(card);
+            ((LinkedList<Card>)cards).addFirst(card);
         }
         return cards.size();
     }
 
     public Card draw() {
-        return this.cards.removeFirst();
+        return ((LinkedList<Card>)cards).removeFirst();
     }
 
     public void remove(Card card) {
@@ -66,11 +67,11 @@ public abstract class Deck implements Serializable {
     }
 
     public void shuffle(Random random) {
-        Collections.shuffle(cards, random);
+        Collections.shuffle(((LinkedList<Card>)cards), random);
     }
 
     public LinkedList<Card> getCards() {
-        return cards;
+        return ((LinkedList<Card>)cards);
     }
 
     public int size() {
