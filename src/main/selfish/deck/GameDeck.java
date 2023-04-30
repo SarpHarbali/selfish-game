@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameDeck extends Deck {
-
+    @Serial
+    private static final long serialVersionUID = 1088614975085601733L;
     public static final String HACK_SUIT = "Hack suit";
     public static final String HOLE_IN_SUIT = "Hole in suit";
     public static final String LASER_BLAST = "Laser blast";
@@ -21,6 +22,7 @@ public class GameDeck extends Deck {
     public static final String SHIELD = "Shield";
     public static final String TETHER = "Tether";
     public static final String TRACTOR_BEAM = "Tractor beam";
+
 
     public GameDeck() {}
 

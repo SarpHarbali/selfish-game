@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class SpaceDeck extends Deck {
+    @Serial
+    private static final long serialVersionUID = -8071367678962477750L;
     public static final String ASTEROID_FIELD = "Asteroid field";
     public static final String BLANK_SPACE = "Blank space";
     public static final String COSMIC_RADIATION = "Cosmic radiation";
@@ -17,6 +19,7 @@ public class SpaceDeck extends Deck {
     public static final String SOLAR_FLARE = "solar flare";
     public static final String USEFUL_JUNK = "useful junk";
     public static final String WORMHOLE = "wormhole";
+
 
     public SpaceDeck() {}
 
