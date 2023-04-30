@@ -9,7 +9,7 @@ public abstract class Deck implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 8079217286616866017L;
-    private Stack<Card> cards = new Stack<>();
+    private LinkedList<Card> cards = new LinkedList<>();
 
     protected Deck() {}
 
@@ -46,19 +46,19 @@ public abstract class Deck implements Serializable {
     }
 
     public int add(Card card) {
-        cards.push(card);
+        cards.addFirst(card);
         return cards.size();
     }
 
     protected int add(List<Card> cards) {
         for (Card card : cards) {
-            this.cards.push(card);
+            this.cards.addFirst(card);
         }
         return cards.size();
     }
 
     public Card draw() {
-        return this.cards.pop();
+        return this.cards.removeFirst();
     }
 
     public void remove(Card card) {
@@ -69,7 +69,7 @@ public abstract class Deck implements Serializable {
         Collections.shuffle(cards, random);
     }
 
-    public Stack<Card> getCards() {
+    public LinkedList<Card> getCards() {
         return cards;
     }
 

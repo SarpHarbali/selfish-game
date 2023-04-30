@@ -9,7 +9,7 @@ public class GameEngine implements Serializable {
     @Serial
     private static final long serialVersionUID = -7253958447986048805L;
 
-    private Queue<Astronaut> activePlayers = new LinkedList<>();
+    private LinkedList<Astronaut> activePlayers = new LinkedList<>();
     private List<Astronaut> corpses;
     private Astronaut currentPlayer;
     private boolean hasStarted;
@@ -36,12 +36,13 @@ public class GameEngine implements Serializable {
 
 
     public int addPlayer(String player) {
-        activePlayers.add(new Astronaut(player, this));
+
+        activePlayers.addFirst(new Astronaut(player, this));
         return activePlayers.size();
     }
 
     public int endTurn() {
-        activePlayers.offer(activePlayers.remove());
+        activePlayers.addFirst(activePlayers.removeLast());
         return activePlayers.size();
     }
 
@@ -50,14 +51,14 @@ public class GameEngine implements Serializable {
     }
 
     public List<Astronaut> getAllPlayers() {
-        return null;
+        return activePlayers;
     }
 
     public Astronaut getCurrentPlayer() {
         return currentPlayer;
     }
 
-    public int fullPlayerCount() {
+    public int getFullPlayerCount() {
         return activePlayers.size();
     }
 

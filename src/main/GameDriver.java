@@ -51,9 +51,9 @@ public class GameDriver {
             k++;
         }
 
-        for (int i = 0; i< ge.fullPlayerCount(); i++) {
+        for (int i = 0; i< ge.getFullPlayerCount(); i++) {
             System.out.printf("Player %d cards: %n \n", i+1);
-            System.out.println(ge.getCurrentPlayer().getHandStr());
+            System.out.println(ge.getAllPlayers().get(i).getHandStr());
         }
 
     }
