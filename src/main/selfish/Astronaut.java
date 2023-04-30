@@ -11,9 +11,9 @@ public class Astronaut implements Serializable {
     private static final long serialVersionUID = -6268567598864260237L;
     private String name;
     private GameEngine game;
-    private List<Card> actions;
-    private List<Oxygen> oxygens;
-    private Collection<Card> track;
+    private List<Card> actions = new ArrayList<>();
+    private List<Oxygen> oxygens = new ArrayList<>();
+    private Collection<Card> track = new ArrayList<>();
 
     public Astronaut(String name, GameEngine game) {
         this.name = name;
@@ -22,7 +22,7 @@ public class Astronaut implements Serializable {
 
     public void addToHand(Card card) {
         if (card instanceof Oxygen) {
-            oxygens.add((Oxygen) card);
+            this.oxygens.add((Oxygen) card);
         } else {
             actions.add(card);
         }
@@ -47,23 +47,27 @@ public class Astronaut implements Serializable {
         return actions;
     }
 
-    public String getActionsStr(boolean enumerated, boolean exludeShields) {
-        List<String> action_string = new ArrayList<>();
+    public String getActionsStr(boolean enumerated, boolean excludeShields) {
+        List<String> actionString = new ArrayList<>();
         for(Card card : getActions()) {
-            action_string.add(card.toString());
+            actionString.add(card.toString());
         }
-        return String.join(",", action_string);
+        return String.join(",", actionString);
     }
 
     public List<Card> getHand() {
         List<Card> hand = new ArrayList<>();
         hand.addAll(oxygens);
-        hand.addAll(getActions());
+        hand.addAll(actions);
         return hand;
     }
 
     public String getHandStr() {
-        return "";
+        List<String> handString = new ArrayList<>();
+        for(Card card : getHand()) {
+            handString.add(card.toString());
+        }
+        return String.join(",", handString);
     }
 
     public Collection<Card> getTrack() {

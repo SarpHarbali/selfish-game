@@ -62,11 +62,15 @@ public abstract class Deck implements Serializable {
     }
 
     public void remove(Card card) {
-
+        cards.remove(card);
     }
 
     public void shuffle(Random random) {
         Collections.shuffle(cards, random);
+    }
+
+    public Stack<Card> getCards() {
+        return cards;
     }
 
     public int size() {

@@ -36,16 +36,17 @@ public class GameDeck extends Deck implements Serializable {
     }
 
     public Oxygen drawOxygen(int value) {
-        Card card;
-        while (true) {
-            card = draw();
-            if (card instanceof Oxygen && ((Oxygen) card).getValue() != value) {
-                return (Oxygen) card;
-            } else {
-                add(card);
+        Oxygen oxygen = new Oxygen(value);
+        for (Card card : getCards()) {
+            if (card instanceof Oxygen && ((Oxygen) card).getValue() == value) {
+                getCards().remove(card);
+                oxygen = (Oxygen) card;
+                break;
             }
         }
+        return oxygen;
     }
+
 
     public Oxygen[] splitOxygen(Oxygen dbl) {
         return null;
