@@ -53,7 +53,7 @@ public abstract class Deck implements Serializable {
 
     protected int add(List<Card> cards) {
         for (Card card : cards) {
-            ((LinkedList<Card>)cards).addFirst(card);
+            ((LinkedList<Card>)this.cards).addFirst(card);
         }
         return cards.size();
     }
