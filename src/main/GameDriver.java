@@ -24,19 +24,24 @@ public class GameDriver {
         GameEngine ge = new GameEngine(22234142, "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\ActionCards.txt", "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\SpaceCards.txt");
         Console con = System.console();
         ArrayList<Astronaut> players = new ArrayList<Astronaut>();
-        players.add(new Astronaut(con.readLine("Player 1 name: "), ge));
-        players.add(new Astronaut(con.readLine("Player 2 name: "), ge));
+        ge.addPlayer(con.readLine("Player 1 name: "));
+        ge.addPlayer(con.readLine("Player 2 name: "));
+
         while (true) {
             String another = con.readLine("Add another? Y or N: ");
             if (another.equals("N")) {
                 break;
             }
-            players.add(new Astronaut(con.readLine("New player name: "), ge));
+            ge.addPlayer(con.readLine("Player name: "));
+        }
+        int k = 0;
+        while (k<20) {
+            ge.startTurn();
+            System.out.println(ge.getCurrentPlayer());
+            ge.endTurn();
+            k++;
         }
 
-        for (Astronaut a:players) {
-            System.out.printf(a.toString());
-        }
         
 
     }

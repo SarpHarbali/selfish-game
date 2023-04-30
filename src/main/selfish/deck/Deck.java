@@ -9,7 +9,8 @@ public abstract class Deck implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 8079217286616866017L;
-    private Collection<Card> cards;
+    private Stack<Card> cards = new Stack<>();
+
     protected Deck() {}
 
     protected static List<Card> loadCards(String path) throws GameException {
@@ -44,5 +45,20 @@ public abstract class Deck implements Serializable {
         return card_array;
     }
 
+    public int add(Card card) {
+        cards.push(card);
+        return cards.size();
+    }
+
+    protected int add(List<Card> cards) {
+        for (Card card : cards) {
+            this.cards.push(card);
+        }
+        return cards.size();
+    }
+
+    public Card draw() {
+        return this.cards.pop();
+    }
 
 }

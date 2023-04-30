@@ -3,12 +3,20 @@ import selfish.deck.GameDeck;
 import selfish.deck.SpaceDeck;
 
 import java.io.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 public class GameEngine implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -7253958447986048805L;
+
+    private Queue<Astronaut> activePlayers = new LinkedList<>();
+
+    private Astronaut currentPlayer;
+
     private Random random;
 
     private GameDeck gameDeck;
@@ -31,6 +39,25 @@ public class GameEngine implements Serializable {
         this.gameDiscard = new GameDeck();
         this.spaceDeck = new SpaceDeck(spaceDeck);
         this.spaceDiscard = new SpaceDeck();
+    }
+
+
+    public int addPlayer(String player) {
+        activePlayers.add(new Astronaut(player, this));
+        return activePlayers.size();
+    }
+
+    public void startTurn() {
+        currentPlayer = activePlayers.peek();
+    }
+
+    public int endTurn() {
+        activePlayers.offer(activePlayers.remove());
+        return activePlayers.size();
+    }
+
+    public Astronaut getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public static GameEngine loadState(String path) throws GameException {
@@ -59,4 +86,5 @@ public class GameEngine implements Serializable {
             throw new GameException("Error while saving data", e);
         }
     }
+
 }
