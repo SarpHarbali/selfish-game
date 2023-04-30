@@ -10,15 +10,13 @@ public class GameEngine implements Serializable {
     private static final long serialVersionUID = -7253958447986048805L;
 
     private Queue<Astronaut> activePlayers = new LinkedList<>();
+    private List<Astronaut> corpses;
     private Astronaut currentPlayer;
+    private boolean hasStarted;
     private Random random;
-
     private GameDeck gameDeck;
-
     private GameDeck gameDiscard;
-
     private SpaceDeck spaceDeck;
-
     private SpaceDeck spaceDiscard;
 
 
@@ -31,6 +29,9 @@ public class GameEngine implements Serializable {
         this.gameDiscard = new GameDeck();
         this.spaceDeck = new SpaceDeck(spaceDeck);
         this.spaceDiscard = new SpaceDeck();
+
+        this.gameDeck.shuffle(random);
+        this.spaceDeck.shuffle(random);
     }
 
 
@@ -117,6 +118,30 @@ public class GameEngine implements Serializable {
 
     public Oxygen[] splitOxygen(Oxygen dbl) {
         return null;
+    }
+
+    public void startGame() {
+        hasStarted = true;
+
+        for (int i = 0; i< activePlayers.size(); i++) {
+            startTurn();
+            currentPlayer.addToHand(this.gameDeck.drawOxygen(2));
+            currentPlayer.addToHand(this.gameDeck.drawOxygen(1));
+            currentPlayer.addToHand(this.gameDeck.drawOxygen(1));
+            currentPlayer.addToHand(this.gameDeck.drawOxygen(1));
+            currentPlayer.addToHand(this.gameDeck.drawOxygen(1));
+            endTurn();
+        }
+
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < activePlayers.size(); k++) {
+                startTurn();
+                currentPlayer.addToHand(this.gameDeck.draw());
+                endTurn();
+            }
+
+        }
+
     }
 
     public void startTurn() {

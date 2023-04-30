@@ -3,7 +3,7 @@ package selfish.deck;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class Card implements Serializable {
+public class Card implements Serializable, java.lang.Comparable{
     @Serial
     private static final long serialVersionUID = 2157053851976390896L;
     private String name;
@@ -21,6 +21,11 @@ public class Card implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }
 

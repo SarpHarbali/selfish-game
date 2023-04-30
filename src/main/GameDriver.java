@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import selfish.Astronaut;
 import selfish.GameEngine;
 import selfish.GameException;
+import selfish.deck.Deck;
 
 public class GameDriver {
 
@@ -42,7 +43,9 @@ public class GameDriver {
             k++;
         }
 
-        
+        for (int i = 0; i<ge.getGameDeck().size(); i++) {
+            System.out.println(ge.getGameDeck());
+        }
 
     }
 

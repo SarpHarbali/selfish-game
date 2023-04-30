@@ -21,7 +21,14 @@ public class Astronaut implements Serializable {
     }
 
     public void addToHand(Card card) {
+        if (card instanceof Oxygen) {
+            oxygens.add((Oxygen) card);
+        } else {
+            actions.add(card);
+        }
 
+        oxygens.sort(Comparator.comparing(Oxygen::getValue));
+        actions.sort(Comparator.comparing(Card::toString));
     }
 
     public void addToTrack(Card card) {
@@ -37,7 +44,6 @@ public class Astronaut implements Serializable {
     }
 
     public List<Card> getActions() {
-        actions.sort(Comparator.comparing(Card::toString));
         return actions;
     }
 
@@ -50,7 +56,6 @@ public class Astronaut implements Serializable {
     }
 
     public List<Card> getHand() {
-        oxygens.sort(Comparator.comparing(Oxygen::getValue));
         List<Card> hand = new ArrayList<>();
         hand.addAll(oxygens);
         hand.addAll(getActions());

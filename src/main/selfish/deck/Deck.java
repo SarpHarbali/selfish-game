@@ -66,7 +66,7 @@ public abstract class Deck implements Serializable {
     }
 
     public void shuffle(Random random) {
-
+        Collections.shuffle(cards, random);
     }
 
     public int size() {
