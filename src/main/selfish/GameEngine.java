@@ -1,12 +1,8 @@
 package selfish;
-import selfish.deck.GameDeck;
-import selfish.deck.SpaceDeck;
+import selfish.deck.*;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 public class GameEngine implements Serializable {
 
@@ -14,9 +10,7 @@ public class GameEngine implements Serializable {
     private static final long serialVersionUID = -7253958447986048805L;
 
     private Queue<Astronaut> activePlayers = new LinkedList<>();
-
     private Astronaut currentPlayer;
-
     private Random random;
 
     private GameDeck gameDeck;
@@ -30,8 +24,6 @@ public class GameEngine implements Serializable {
 
 
     private GameEngine() {}
-
-
 
     public GameEngine(long seed, String gameDeck, String spaceDeck) throws GameException {
         random = new Random(seed);
@@ -47,17 +39,49 @@ public class GameEngine implements Serializable {
         return activePlayers.size();
     }
 
-    public void startTurn() {
-        currentPlayer = activePlayers.peek();
-    }
-
     public int endTurn() {
         activePlayers.offer(activePlayers.remove());
         return activePlayers.size();
     }
 
+    public boolean gameOver() {
+        return false;
+    }
+
+    public List<Astronaut> getAllPlayers() {
+        return null;
+    }
+
     public Astronaut getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public int fullPlayerCount() {
+        return 0;
+    }
+
+    public GameDeck getGameDeck() {
+        return this.gameDeck;
+    }
+
+    public GameDeck getGameDiscard() {
+        return this.gameDiscard;
+    }
+
+    public SpaceDeck getSpaceDeck() {
+        return this.spaceDeck;
+    }
+
+    public SpaceDeck getSpaceDiscard() {
+        return this.spaceDiscard;
+    }
+
+    public Astronaut getWinner() {
+        return null;
+    }
+
+    public void killPlayer(Astronaut corpse) {
+
     }
 
     public static GameEngine loadState(String path) throws GameException {
@@ -75,6 +99,10 @@ public class GameEngine implements Serializable {
 
     }
 
+    public void mergeDecks(Deck deck1, Deck deck2) {
+
+    }
+
     public void saveState(String path) throws GameException {
         try {
             FileOutputStream fout = new FileOutputStream(path);
@@ -85,6 +113,18 @@ public class GameEngine implements Serializable {
         } catch (IOException e) {
             throw new GameException("Error while saving data", e);
         }
+    }
+
+    public Oxygen[] splitOxygen(Oxygen dbl) {
+        return null;
+    }
+
+    public void startTurn() {
+        currentPlayer = activePlayers.peek();
+    }
+
+    public Card travel(Astronaut traveller) {
+        return null;
     }
 
 }

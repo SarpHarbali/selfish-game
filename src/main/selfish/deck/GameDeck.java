@@ -25,7 +25,14 @@ public class GameDeck extends Deck implements Serializable {
     public GameDeck() {}
 
     public GameDeck(String path) throws GameException {
-        super();
-        List<Card> game_deck_list = loadCards(path);
+        add(loadCards(path));
+    }
+
+    public Oxygen drawOxygen(int value) {
+        return null;
+    }
+
+    public Oxygen[] splitOxygen(Oxygen dbl) {
+        return null;
     }
 }

@@ -23,7 +23,6 @@ public class SpaceDeck extends Deck implements Serializable {
     public SpaceDeck() {}
 
     public SpaceDeck(String path) throws GameException {
-        super();
-        List<Card> game_deck_list = loadCards(path);
+        add(loadCards(path));
     }
 }

@@ -61,4 +61,16 @@ public abstract class Deck implements Serializable {
         return this.cards.pop();
     }
 
+    public void remove(Card card) {
+
+    }
+
+    public void shuffle(Random random) {
+
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
 }

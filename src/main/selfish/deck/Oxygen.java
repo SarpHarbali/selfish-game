@@ -18,6 +18,6 @@ public class Oxygen extends Card implements Serializable {
     }
 
     public String toString() {
-        return super.toString();
+        return super.toString()+"("+getValue()+")";
     }
 }
