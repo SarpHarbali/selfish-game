@@ -2,6 +2,7 @@ package selfish;
 import selfish.deck.Card;
 import selfish.deck.GameDeck;
 import selfish.deck.Oxygen;
+import selfish.deck.SpaceDeck;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public class Astronaut implements Serializable {
     private GameEngine game;
     private List<Card> actions = new ArrayList<>();
     private List<Oxygen> oxygens = new ArrayList<>();
-    private Collection<Card> track = new ArrayList<>();
+    private Collection<Card> track = new LinkedList<>();
 
     public Astronaut(String name, GameEngine game) {
         this.name = name;
@@ -37,7 +38,7 @@ public class Astronaut implements Serializable {
     }
 
     public void addToTrack(Card card) {
-        this.track.add(card);
+        ((LinkedList<Card>)track).addFirst(card);
     }
 
     public int breathe() {
@@ -52,7 +53,7 @@ public class Astronaut implements Serializable {
     }
 
     public int distanceFromShip() {
-        return 0;
+        return 6 - getTrack().size();
     }
 
     public List<Card> getActions() {
@@ -130,11 +131,28 @@ public class Astronaut implements Serializable {
     }
 
     public void hack(Card card) {
-
+        if (card instanceof Oxygen) {
+            oxygens.remove(card);
+        } else {
+            actions.remove(card);
+        }
     }
 
     public Card hack(String card) {
-        return null;
+        Card ca = null;
+        for (Card c : getHand()) {
+            if (c.toString().equals(card)) {
+                if (c instanceof Oxygen) {
+                    oxygens.remove(c);
+                } else {
+                    actions.remove(c);
+                }
+                ca = c;
+                break;
+
+            }
+        }
+        return ca;
     }
 
     public int hasCard(String card) {
@@ -142,7 +160,7 @@ public class Astronaut implements Serializable {
     }
 
     public boolean hasMeltedEyeballs() {
-        return false;
+        return peekAtTrack().toString().equals(SpaceDeck.SOLAR_FLARE);
     }
 
     public boolean hasWon() {
@@ -150,11 +168,11 @@ public class Astronaut implements Serializable {
     }
 
     public boolean isAlive() {
-        return false;
+        return oxygens.size() > 0;
     }
 
     public Card laserBlast() {
-        return null;
+        return ((LinkedList<Card>)track).removeFirst();
     }
 
     public int oxygenRemaining() {
@@ -166,23 +184,27 @@ public class Astronaut implements Serializable {
     }
 
     public Card peekAtTrack() {
-        return null;
+        return ((ArrayList<Card>) getTrack()).get(getTrack().size() - 1);
     }
 
     public Oxygen siphon() {
-        return null;
+        Oxygen oxy = null;
+        for (Oxygen oxygen : oxygens) {
+            if (oxygen.getValue() == 1) {
+                oxygens.remove(oxygen);
+                oxy = oxygen;
+                break;
+            }
+        }
+        return oxy;
     }
 
     public Card steal() {
-        LinkedList<Astronaut> actives = (LinkedList<Astronaut>) this.game.getActivePlayers();
-        Astronaut astronaut = actives.get(this.game.getRandom().nextInt(actives.size()));
-        Card card = astronaut.getHand().get(this.game.getRandom().nextInt(astronaut.getHand().size()));
+        Card card = getHand().get(this.game.getRandom().nextInt(getHand().size()));
         if (card instanceof Oxygen) {
-            this.oxygens.add((Oxygen) card);
-            astronaut.getOxygens().remove(card);
+            oxygens.remove(card);
         } else {
-            this.actions.add(card);
-            astronaut.getActions().remove(card);
+            actions.remove(card);
         }
         return card;
     }

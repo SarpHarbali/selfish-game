@@ -100,7 +100,11 @@ public class GameEngine implements Serializable {
     }
 
     public void mergeDecks(Deck deck1, Deck deck2) {
-
+        for (Card card : deck2.getCards()) {
+            deck1.add(card);
+            deck2.remove(card);
+        }
+        deck2.shuffle(random);
     }
 
     public Random getRandom() {
