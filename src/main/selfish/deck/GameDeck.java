@@ -48,8 +48,21 @@ public class GameDeck extends Deck {
         return oxygen;
     }
 
-
     public Oxygen[] splitOxygen(Oxygen dbl) {
-        return null;
+        add(dbl);
+
+        Oxygen[] oxys = new Oxygen[2];
+        int count = 0;
+
+        for (Card card : getCards()) {
+            if (card.toString().equals(OXYGEN_1)) {
+                oxys[count] = (Oxygen) card;
+                count++;
+                if (count == 2) {
+                    break;
+                }
+            }
+        }
+        return oxys;
     }
 }

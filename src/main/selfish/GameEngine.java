@@ -81,7 +81,8 @@ public class GameEngine implements Serializable {
     }
 
     public void killPlayer(Astronaut corpse) {
-
+        corpses.add(corpse);
+        activePlayers.remove(corpse);
     }
 
     public static GameEngine loadState(String path) throws GameException {
@@ -123,8 +124,24 @@ public class GameEngine implements Serializable {
         }
     }
 
-    public Oxygen[] splitOxygen(Oxygen dbl) {
-        return null;
+    public Oxygen[] splitOxygen(Oxygen dbl) throws IllegalStateException {
+        Oxygen[] oxies = new Oxygen[2];
+
+        try {
+            oxies = gameDiscard.splitOxygen(dbl);
+        } catch (IllegalStateException e1) {
+            try {
+                oxies = gameDeck.splitOxygen(dbl);
+            } catch (IllegalStateException e2) {
+                mergeDecks(gameDeck, gameDiscard);
+                try {
+                    oxies = gameDeck.splitOxygen(dbl);
+                } catch (IllegalStateException e3) {
+                    throw new IllegalStateException();
+                }
+            }
+        }
+        return oxies;
     }
 
     public void startGame() {

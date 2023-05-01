@@ -201,6 +201,9 @@ public class Astronaut implements Serializable {
 
     public Card steal() {
         Card card = getHand().get(this.game.getRandom().nextInt(getHand().size()));
+        if (getHand().size() == 1) {
+            game.killPlayer(this);
+        }
         if (card instanceof Oxygen) {
             oxygens.remove(card);
         } else {
