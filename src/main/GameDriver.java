@@ -22,13 +22,12 @@ public class GameDriver {
     }
 
     public static void main(String[] args) throws GameException {
-        GameEngine ge = new GameEngine(22234142, "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\ActionCards.txt", "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\SpaceCards.txt");
-        /*
+        GameEngine ge = new GameEngine(46356352, "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\ActionCards.txt", "D:\\Documents\\Manchester\\Programming 2\\comp16412-coursework-2__j68216uh\\io\\SpaceCards.txt");
         ge.addPlayer("sarp");
         ge.addPlayer("selin");
         ge.addPlayer("sena");
-        */
 
+        /*
         Console con = System.console();
         ArrayList<Astronaut> players = new ArrayList<Astronaut>();
         ge.addPlayer(con.readLine("Player 1 name: "));
@@ -42,7 +41,7 @@ public class GameDriver {
             ge.addPlayer(con.readLine("Player name: "));
         }
 
-
+         */
         ge.startGame();
         int k = 0;
         while (k<20) {

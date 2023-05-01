@@ -1,5 +1,6 @@
 package selfish;
 import selfish.deck.Card;
+import selfish.deck.GameDeck;
 import selfish.deck.Oxygen;
 
 import java.io.Serial;
@@ -27,7 +28,7 @@ public class Astronaut implements Serializable {
             actions.add(card);
         }
 
-        oxygens.sort(Comparator.comparing(Oxygen::getValue));
+        oxygens.sort(Comparator.comparing(Oxygen::getValue, Comparator.reverseOrder()));
         actions.sort(Comparator.comparing(Card::toString));
     }
 
@@ -48,11 +49,20 @@ public class Astronaut implements Serializable {
     }
 
     public String getActionsStr(boolean enumerated, boolean excludeShields) {
-        List<String> actionString = new ArrayList<>();
-        for(Card card : getActions()) {
-            actionString.add(card.toString());
+        StringBuilder sb = new StringBuilder();
+
+        int count = 0;
+        while (count < actions.size()) {
+            if (hasCard(actions.get(count).toString()) > 1) {
+                sb.append(hasCard(actions.get(count).toString())).append("x ");
+            }
+            sb.append(actions.get(count).toString());
+            count += hasCard(actions.get(count).toString());
+            if (count != actions.size()) {
+                sb.append(", ");
+            }
         }
-        return String.join(",", actionString);
+        return sb.toString();
     }
 
     public List<Card> getHand() {
@@ -63,11 +73,34 @@ public class Astronaut implements Serializable {
     }
 
     public String getHandStr() {
-        List<String> handString = new ArrayList<>();
-        for(Card card : getHand()) {
-            handString.add(card.toString());
+        StringBuilder sb = new StringBuilder();
+
+        int hop = 0;
+        while (hop < oxygens.size()) {
+            if (hasCard(oxygens.get(hop).toString()) > 1) {
+                sb.append(hasCard(oxygens.get(hop).toString())).append("x ");
+            }
+            sb.append(oxygens.get(hop).toString());
+            hop += hasCard(oxygens.get(hop).toString());
+            if (hop != oxygens.size()) {
+                sb.append(", ");
+            } else {
+                sb.append("; ");
+            }
         }
-        return String.join(",", handString);
+
+        int count = 0;
+        while (count < actions.size()) {
+            if (hasCard(actions.get(count).toString()) > 1) {
+                sb.append(hasCard(actions.get(count).toString())).append("x ");
+            }
+            sb.append(actions.get(count).toString());
+            count += hasCard(actions.get(count).toString());
+            if (count != actions.size()) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
     }
 
     public Collection<Card> getTrack() {
@@ -83,7 +116,7 @@ public class Astronaut implements Serializable {
     }
 
     public int hasCard(String card) {
-        return 0;
+        return getHand().stream().filter(x -> x.toString().equals(card)).toList().size();
     }
 
     public boolean hasMeltedEyeballs() {
