@@ -164,7 +164,7 @@ public class Astronaut implements Serializable {
     }
 
     public boolean hasWon() {
-        return false;
+        return track.size() == 6;
     }
 
     public boolean isAlive() {
@@ -215,10 +215,17 @@ public class Astronaut implements Serializable {
     }
 
     public void swapTrack(Astronaut swapee) {
+        Collection<Card> tempSwaper = track;
+        Collection<Card> tempSwapee = swapee.getTrack();
 
+        track.removeAll(getTrack());
+        track.addAll(tempSwapee);
+
+        swapee.getTrack().removeAll(swapee.getTrack());
+        swapee.getTrack().addAll(tempSwaper);
     }
 
     public String toString(){
-        return name;
+        return name + " (is dead)";
     }
 }

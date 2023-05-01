@@ -45,7 +45,12 @@ public class GameEngine implements Serializable {
     }
 
     public boolean gameOver() {
-        return false;
+        for (Astronaut astronaut : activePlayers) {
+            if (astronaut.hasWon()) {
+                return true;
+            }
+        }
+        return activePlayers.size() == 0;
     }
 
     public List<Astronaut> getAllPlayers() {
@@ -77,6 +82,11 @@ public class GameEngine implements Serializable {
     }
 
     public Astronaut getWinner() {
+        for (Astronaut astronaut : activePlayers) {
+            if (astronaut.hasWon()) {
+                return astronaut;
+            }
+        }
         return null;
     }
 
