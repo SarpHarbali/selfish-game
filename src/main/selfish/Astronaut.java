@@ -49,18 +49,29 @@ public class Astronaut implements Serializable {
     }
 
     public String getActionsStr(boolean enumerated, boolean excludeShields) {
+        List<Card> newAction = actions;
+        if (excludeShields) {
+            newAction.removeIf(act -> act.toString().equals(GameDeck.SHIELD));
+        }
+
         StringBuilder sb = new StringBuilder();
 
+        char c = 'A';
         int count = 0;
-        while (count < actions.size()) {
-            if (hasCard(actions.get(count).toString()) > 1) {
-                sb.append(hasCard(actions.get(count).toString())).append("x ");
+        while (count < newAction.size()) {
+            if (hasCard(newAction.get(count).toString()) > 1 && !enumerated) {
+                sb.append(hasCard(newAction.get(count).toString())).append("x ");
             }
-            sb.append(actions.get(count).toString());
-            count += hasCard(actions.get(count).toString());
-            if (count != actions.size()) {
+
+            if (enumerated) {
+                sb.append("[").append(c).append("] ");
+            }
+            sb.append(newAction.get(count).toString());
+            count += hasCard(newAction.get(count).toString());
+            if (count != newAction.size()) {
                 sb.append(", ");
             }
+            c++;
         }
         return sb.toString();
     }
