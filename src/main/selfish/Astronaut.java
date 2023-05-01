@@ -186,7 +186,7 @@ public class Astronaut implements Serializable {
     }
 
     public Card peekAtTrack() {
-        return ((ArrayList<Card>) getTrack()).get(getTrack().size() - 1);
+        return ((LinkedList<Card>) getTrack()).get(getTrack().size() - 1);
     }
 
     public Oxygen siphon() {
