@@ -57,7 +57,7 @@ public class GameEngine implements Serializable {
     }
 
     public int getFullPlayerCount() {
-        return activePlayers.size();
+        return activePlayers.size() + corpses.size();
     }
 
     public GameDeck getGameDeck() {

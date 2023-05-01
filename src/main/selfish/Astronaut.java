@@ -38,7 +38,7 @@ public class Astronaut implements Serializable {
     }
 
     public void addToTrack(Card card) {
-        ((LinkedList<Card>)track).addFirst(card);
+        track.add(card);
     }
 
     public int breathe() {
@@ -172,7 +172,9 @@ public class Astronaut implements Serializable {
     }
 
     public Card laserBlast() {
-        return ((LinkedList<Card>)track).removeFirst();
+        Card c = peekAtTrack();
+        track.remove(peekAtTrack());
+        return c;
     }
 
     public int oxygenRemaining() {
