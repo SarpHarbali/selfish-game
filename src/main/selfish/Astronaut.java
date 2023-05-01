@@ -21,11 +21,15 @@ public class Astronaut implements Serializable {
         this.game = game;
     }
 
+    public List<Oxygen> getOxygens() {
+        return oxygens;
+    }
+
     public void addToHand(Card card) {
         if (card instanceof Oxygen) {
             this.oxygens.add((Oxygen) card);
         } else {
-            actions.add(card);
+            this.actions.add(card);
         }
 
         oxygens.sort(Comparator.comparing(Oxygen::getValue, Comparator.reverseOrder()));
@@ -33,11 +37,18 @@ public class Astronaut implements Serializable {
     }
 
     public void addToTrack(Card card) {
-
+        this.track.add(card);
     }
 
     public int breathe() {
-        return 0;
+        for (Oxygen oxygen : oxygens) {
+            if (oxygen.getValue() == 1) {
+                this.game.getGameDiscard().add(oxygen);
+                oxygens.remove(oxygen);
+                break;
+            }
+        }
+        return oxygenRemaining();
     }
 
     public int distanceFromShip() {
@@ -115,7 +126,7 @@ public class Astronaut implements Serializable {
     }
 
     public Collection<Card> getTrack() {
-        return null;
+        return track;
     }
 
     public void hack(Card card) {
@@ -147,7 +158,11 @@ public class Astronaut implements Serializable {
     }
 
     public int oxygenRemaining() {
-        return 0;
+        int total = 0;
+        for (Oxygen oxygen : oxygens) {
+            total += oxygen.getValue();
+        }
+        return total;
     }
 
     public Card peekAtTrack() {
@@ -159,7 +174,17 @@ public class Astronaut implements Serializable {
     }
 
     public Card steal() {
-        return null;
+        LinkedList<Astronaut> actives = (LinkedList<Astronaut>) this.game.getActivePlayers();
+        Astronaut astronaut = actives.get(this.game.getRandom().nextInt(actives.size()));
+        Card card = astronaut.getHand().get(this.game.getRandom().nextInt(astronaut.getHand().size()));
+        if (card instanceof Oxygen) {
+            this.oxygens.add((Oxygen) card);
+            astronaut.getOxygens().remove(card);
+        } else {
+            this.actions.add(card);
+            astronaut.getActions().remove(card);
+        }
+        return card;
     }
 
     public void swapTrack(Astronaut swapee) {

@@ -29,20 +29,18 @@ public class GameEngine implements Serializable {
         this.gameDiscard = new GameDeck();
         this.spaceDeck = new SpaceDeck(spaceDeck);
         this.spaceDiscard = new SpaceDeck();
-
         this.gameDeck.shuffle(random);
         this.spaceDeck.shuffle(random);
     }
 
 
     public int addPlayer(String player) {
-
         ((LinkedList<Astronaut>)activePlayers).addFirst(new Astronaut(player, this));
         return activePlayers.size();
     }
 
     public int endTurn() {
-        ((LinkedList<Astronaut>)activePlayers).addFirst(((LinkedList<Astronaut>)activePlayers).removeLast());
+        ((LinkedList<Astronaut>)activePlayers).addFirst(currentPlayer);
         return activePlayers.size();
     }
 
@@ -105,6 +103,10 @@ public class GameEngine implements Serializable {
 
     }
 
+    public Random getRandom() {
+        return random;
+    }
+
     public void saveState(String path) throws GameException {
         try {
             FileOutputStream fout = new FileOutputStream(path);
@@ -146,12 +148,22 @@ public class GameEngine implements Serializable {
 
     }
 
+    public Collection<Astronaut> getActivePlayers() {
+        return activePlayers;
+    }
+
     public void startTurn() {
+        ((LinkedList<Astronaut>)activePlayers).addFirst(((LinkedList<Astronaut>)activePlayers).removeLast());
         currentPlayer = ((LinkedList<Astronaut>)activePlayers).peek();
+        ((LinkedList<Astronaut>)activePlayers).removeFirst();
     }
 
     public Card travel(Astronaut traveller) {
-        return null;
+        traveller.breathe();
+        traveller.breathe();
+        Card card = this.spaceDeck.draw();
+        traveller.addToTrack(card);
+        return card;
     }
 
 }
