@@ -41,13 +41,25 @@ public class Astronaut implements Serializable {
         track.add(card);
     }
 
+    public void die() {
+        actions.clear();
+        oxygens.clear();
+    }
+
+
     public int breathe() {
         for (Oxygen oxygen : oxygens) {
             if (oxygen.getValue() == 1) {
                 this.game.getGameDiscard().add(oxygen);
                 oxygens.remove(oxygen);
-                break;
+            } else {
+                Oxygen[] oxyReturns = game.splitOxygen(oxygen);
+                for (Oxygen o : oxyReturns) {
+                    addToHand(o);
+                }
+                oxygens.remove(oxyReturns[0]);
             }
+            break;
         }
         return oxygenRemaining();
     }
@@ -132,7 +144,7 @@ public class Astronaut implements Serializable {
 
     public void hack(Card card) {
         if (!getHand().contains(card)) {
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
         } else if (card == null) {
             throw new IllegalArgumentException();
         }
@@ -148,6 +160,10 @@ public class Astronaut implements Serializable {
         }
 
 
+    }
+
+    public void clearTrack() {
+        track.clear();
     }
 
     public Card hack(String card) {
@@ -184,7 +200,7 @@ public class Astronaut implements Serializable {
     }
 
     public boolean hasWon() {
-        return track.size() == 6;
+        return track.size() == 6 && oxygens.size() > 0;
     }
 
     public boolean isAlive() {
@@ -213,7 +229,11 @@ public class Astronaut implements Serializable {
     }
 
     public Card peekAtTrack() {
-        return ((LinkedList<Card>) getTrack()).get(getTrack().size() - 1);
+        if (getTrack().size() > 0) {
+            return ((LinkedList<Card>) getTrack()).get(getTrack().size() - 1);
+        } else {
+            return null;
+        }
     }
 
     public Oxygen siphon() {
@@ -222,8 +242,16 @@ public class Astronaut implements Serializable {
             if (oxygen.getValue() == 1) {
                 oxygens.remove(oxygen);
                 oxy = oxygen;
-                break;
+            } else {
+                Oxygen[] oxyReturns = game.splitOxygen(oxygen);
+                for (Oxygen o : oxyReturns) {
+                    addToHand(o);
+                }
+                oxy = oxyReturns[0];
+                oxygens.remove(oxygen);
+                oxygens.remove(oxy);
             }
+            break;
         }
         return oxy;
     }
@@ -242,14 +270,16 @@ public class Astronaut implements Serializable {
     }
 
     public void swapTrack(Astronaut swapee) {
-        Collection<Card> tempSwaper = track;
+        Collection<Card> tempSwaper = new LinkedList<>(track);
         Collection<Card> tempSwapee = swapee.getTrack();
 
-        track.removeAll(getTrack());
+        track.clear();
         track.addAll(tempSwapee);
 
-        swapee.getTrack().removeAll(swapee.getTrack());
-        swapee.getTrack().addAll(tempSwaper);
+        swapee.clearTrack();
+        for (Card c : tempSwaper) {
+            swapee.addToTrack(c);
+        }
     }
 
     public String toString(){

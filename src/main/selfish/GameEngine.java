@@ -18,6 +18,7 @@ public class GameEngine implements Serializable {
     private GameDeck gameDiscard;
     private SpaceDeck spaceDeck;
     private SpaceDeck spaceDiscard;
+    private boolean startedTurn;
 
 
 
@@ -46,6 +47,7 @@ public class GameEngine implements Serializable {
     }
 
     public int endTurn() {
+        startedTurn = false;
         ((LinkedList<Astronaut>)activePlayers).addFirst(currentPlayer);
         return activePlayers.size();
     }
@@ -104,6 +106,7 @@ public class GameEngine implements Serializable {
     }
 
     public void killPlayer(Astronaut corpse) {
+        corpse.die();
         corpses.add(corpse);
         activePlayers.remove(corpse);
     }
@@ -150,19 +153,30 @@ public class GameEngine implements Serializable {
     public Oxygen[] splitOxygen(Oxygen dbl) {
         Oxygen[] oxies = new Oxygen[2];
 
-        try {
-            oxies = gameDiscard.splitOxygen(dbl);
-        } catch (IllegalStateException e1) {
-            try {
-                oxies = gameDeck.splitOxygen(dbl);
-            } catch (IllegalStateException e2) {
-                mergeDecks(gameDeck, gameDiscard);
-                try {
-                    oxies = gameDeck.splitOxygen(dbl);
-                } catch (IllegalStateException e3) {
-                    throw new IllegalStateException();
-                }
+        int deckCount = 0;
+        int discardCount = 0;
+
+        for (Card card : gameDeck.getCards()) {
+            if (card.toString().equals(GameDeck.OXYGEN_1)) {
+                deckCount++;
             }
+        }
+
+        for (Card card : gameDiscard.getCards()) {
+            if (card.toString().equals(GameDeck.OXYGEN_1)) {
+                discardCount++;
+            }
+        }
+
+        if (discardCount > 2) {
+            oxies = gameDiscard.splitOxygen(dbl);
+        } else if (deckCount > 2) {
+            oxies = gameDeck.splitOxygen(dbl);
+        } else if (discardCount == 1 && deckCount == 1) {
+            mergeDecks(gameDeck, gameDiscard);
+            oxies = gameDeck.splitOxygen(dbl);
+        } else {
+            throw new IllegalStateException();
         }
         return oxies;
     }
@@ -203,9 +217,10 @@ public class GameEngine implements Serializable {
     }
 
     public void startTurn() {
-        if (gameOver() || !hasStarted) {
+        if (gameOver() || !hasStarted || startedTurn) {
             throw new IllegalStateException();
         } else{
+            startedTurn = true;
             ((LinkedList<Astronaut>)activePlayers).addFirst(((LinkedList<Astronaut>)activePlayers).removeLast());
             currentPlayer = ((LinkedList<Astronaut>)activePlayers).peek();
             ((LinkedList<Astronaut>)activePlayers).removeFirst();
