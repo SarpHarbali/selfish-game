@@ -168,6 +168,12 @@ public class GameEngine implements Serializable {
     }
 
     public void startGame() {
+        if (getFullPlayerCount() == 1 || getFullPlayerCount() == 6) {
+            throw new IllegalStateException();
+        }
+        if (hasStarted) {
+            throw new IllegalStateException();
+        }
         hasStarted = true;
 
         for (int i = 0; i< activePlayers.size(); i++) {
@@ -197,21 +203,28 @@ public class GameEngine implements Serializable {
     }
 
     public void startTurn() {
-        ((LinkedList<Astronaut>)activePlayers).addFirst(((LinkedList<Astronaut>)activePlayers).removeLast());
-        currentPlayer = ((LinkedList<Astronaut>)activePlayers).peek();
-        ((LinkedList<Astronaut>)activePlayers).removeFirst();
+        if (gameOver() || !hasStarted) {
+            throw new IllegalStateException();
+        } else{
+            ((LinkedList<Astronaut>)activePlayers).addFirst(((LinkedList<Astronaut>)activePlayers).removeLast());
+            currentPlayer = ((LinkedList<Astronaut>)activePlayers).peek();
+            ((LinkedList<Astronaut>)activePlayers).removeFirst();
+        }
+
     }
 
     public Card travel(Astronaut traveller) {
-        try {
+        if (traveller.getOxygens().size() < 2) {
+            throw new IllegalStateException();
+        } else {
             traveller.breathe();
             traveller.breathe();
             Card card = this.spaceDeck.draw();
             traveller.addToTrack(card);
             return card;
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException("hayir", e);
+
         }
+
 
     }
 

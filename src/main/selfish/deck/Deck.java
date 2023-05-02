@@ -59,6 +59,9 @@ public abstract class Deck implements Serializable {
     }
 
     public Card draw() {
+        if (cards.size() == 0) {
+            throw new IllegalStateException();
+        }
         return ((LinkedList<Card>)cards).removeFirst();
     }
 

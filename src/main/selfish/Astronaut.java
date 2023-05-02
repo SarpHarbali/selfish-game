@@ -131,7 +131,12 @@ public class Astronaut implements Serializable {
     }
 
     public void hack(Card card) {
-        try {
+        if (!getHand().contains(card)) {
+            throw new IllegalStateException();
+        } else if (card == null) {
+            throw new IllegalArgumentException();
+        }
+        else {
             if (card instanceof Oxygen) {
                 oxygens.remove(card);
             } else {
@@ -140,34 +145,33 @@ public class Astronaut implements Serializable {
             if (oxygens.size() == 0) {
                 game.killPlayer(this);
             }
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException();
         }
+
 
     }
 
     public Card hack(String card) {
-        try {
-            Card ca = null;
-            for (Card c : getHand()) {
-                if (c.toString().equals(card)) {
-                    if (c instanceof Oxygen) {
-                        oxygens.remove(c);
-                    } else {
-                        actions.remove(c);
-                    }
-                    ca = c;
-                    break;
-
-                }
+        Card car = null;
+        for (Card c : getHand()) {
+            if (c.toString().equals(card)) {
+                car = c;
+                break;
+            }
+        }
+        if (car==null) {
+            throw new IllegalArgumentException();
+        } else {
+            if (car instanceof Oxygen) {
+                oxygens.remove(car);
+            } else {
+                actions.remove(car);
             }
             if (oxygens.size() == 0) {
                 game.killPlayer(this);
             }
-            return ca;
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException();
+        return car;
         }
+
 
     }
 
@@ -188,13 +192,15 @@ public class Astronaut implements Serializable {
     }
 
     public Card laserBlast() {
-        try {
+        if (track.size() < 1) {
+            throw new IllegalArgumentException();
+        } else {
             Card c = peekAtTrack();
             track.remove(peekAtTrack());
             return c;
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException();
         }
+
+
 
     }
 

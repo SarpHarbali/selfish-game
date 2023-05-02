@@ -37,41 +37,43 @@ public class GameDeck extends Deck {
     }
 
     public Oxygen drawOxygen(int value) {
-        try {
-            Oxygen oxygen = new Oxygen(value);
-            for (Card card : getCards()) {
-                if (card instanceof Oxygen && ((Oxygen) card).getValue() == value) {
-                    getCards().remove(card);
-                    oxygen = (Oxygen) card;
-                    break;
-                }
+        Oxygen oxygen = null;
+        for (Card card : getCards()) {
+            if (card instanceof Oxygen && ((Oxygen) card).getValue() == value) {
+                getCards().remove(card);
+                oxygen = (Oxygen) card;
+                break;
             }
-            return oxygen;
-        } catch (IllegalStateException e) {
+        }
+        if (oxygen == null) {
             throw new IllegalStateException();
         }
-
+        return oxygen;
     }
 
-    public Oxygen[] splitOxygen(Oxygen dbl){
-        add(dbl);
+    public Oxygen[] splitOxygen(Oxygen dbl) throws IllegalStateException {
+        if (dbl.getValue() != 2) {
+            throw new IllegalArgumentException();
+        } else {
+            add(dbl);
 
-        Oxygen[] oxys = new Oxygen[2];
-        int count = 0;
+            Oxygen[] oxys = new Oxygen[2];
+            int count = 0;
 
-        for (Card card : getCards()) {
-            if (card.toString().equals(OXYGEN_1)) {
-                oxys[count] = (Oxygen) card;
-                count++;
-                if (count == 2) {
-                    break;
+            for (Card card : getCards()) {
+                if (card.toString().equals(OXYGEN_1)) {
+                    oxys[count] = (Oxygen) card;
+                    count++;
+                    if (count == 2) {
+                        break;
+                    }
                 }
             }
-        }
-        try {
+            if (count != 2) {
+                throw new IllegalStateException();
+            }
             return oxys;
-        } catch (IllegalStateException e) {
-            throw new IllegalStateException();
+
         }
 
     }
