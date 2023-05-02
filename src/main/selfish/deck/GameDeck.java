@@ -37,18 +37,23 @@ public class GameDeck extends Deck {
     }
 
     public Oxygen drawOxygen(int value) {
-        Oxygen oxygen = new Oxygen(value);
-        for (Card card : getCards()) {
-            if (card instanceof Oxygen && ((Oxygen) card).getValue() == value) {
-                getCards().remove(card);
-                oxygen = (Oxygen) card;
-                break;
+        try {
+            Oxygen oxygen = new Oxygen(value);
+            for (Card card : getCards()) {
+                if (card instanceof Oxygen && ((Oxygen) card).getValue() == value) {
+                    getCards().remove(card);
+                    oxygen = (Oxygen) card;
+                    break;
+                }
             }
+            return oxygen;
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException();
         }
-        return oxygen;
+
     }
 
-    public Oxygen[] splitOxygen(Oxygen dbl) {
+    public Oxygen[] splitOxygen(Oxygen dbl){
         add(dbl);
 
         Oxygen[] oxys = new Oxygen[2];
@@ -63,6 +68,11 @@ public class GameDeck extends Deck {
                 }
             }
         }
-        return oxys;
+        try {
+            return oxys;
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException();
+        }
+
     }
 }

@@ -34,9 +34,15 @@ public class GameEngine implements Serializable {
     }
 
 
-    public int addPlayer(String player) {
-        ((LinkedList<Astronaut>)activePlayers).addFirst(new Astronaut(player, this));
-        return activePlayers.size();
+    public int addPlayer(String player) throws IllegalStateException {
+        if (hasStarted || getFullPlayerCount() == 5) {
+            throw new IllegalStateException();
+        } else {
+
+            ((LinkedList<Astronaut>)activePlayers).addFirst(new Astronaut(player, this));
+            return activePlayers.size();
+        }
+
     }
 
     public int endTurn() {
@@ -122,7 +128,7 @@ public class GameEngine implements Serializable {
             deck1.add(card);
             deck2.remove(card);
         }
-        deck2.shuffle(random);
+        deck1.shuffle(random);
     }
 
     public Random getRandom() {
@@ -141,7 +147,7 @@ public class GameEngine implements Serializable {
         }
     }
 
-    public Oxygen[] splitOxygen(Oxygen dbl) throws IllegalStateException {
+    public Oxygen[] splitOxygen(Oxygen dbl) {
         Oxygen[] oxies = new Oxygen[2];
 
         try {
@@ -197,11 +203,16 @@ public class GameEngine implements Serializable {
     }
 
     public Card travel(Astronaut traveller) {
-        traveller.breathe();
-        traveller.breathe();
-        Card card = this.spaceDeck.draw();
-        traveller.addToTrack(card);
-        return card;
+        try {
+            traveller.breathe();
+            traveller.breathe();
+            Card card = this.spaceDeck.draw();
+            traveller.addToTrack(card);
+            return card;
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("hayir", e);
+        }
+
     }
 
 }
