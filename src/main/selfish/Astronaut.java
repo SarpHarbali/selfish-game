@@ -48,21 +48,20 @@ public class Astronaut implements Serializable {
 
 
     public int breathe() {
+
         for (Oxygen oxygen : oxygens) {
             if (oxygen.getValue() == 1) {
+                if (oxygens.size() == 1) {
+                    game.killPlayer(this);
+                }
                 this.game.getGameDiscard().add(oxygen);
                 oxygens.remove(oxygen);
             } else {
-                Oxygen[] oxyReturns = game.splitOxygen(oxygen);
-                for (Oxygen o : oxyReturns) {
-                    addToHand(o);
-                }
-                oxygens.remove(oxyReturns[0]);
+                oxygens.add(new Oxygen(1));
+                game.getGameDiscard().add(oxygen);
+                oxygens.remove(oxygen);
             }
             break;
-        }
-        if (oxygens.size() == 0) {
-            game.killPlayer(this);
         }
         return oxygenRemaining();
     }

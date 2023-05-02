@@ -5,8 +5,7 @@ import selfish.GameException;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GameDeck extends Deck {
     @Serial
@@ -61,12 +60,12 @@ public class GameDeck extends Deck {
             int count = 0;
 
             for (Card card : getCards()) {
-                if (card.toString().equals(OXYGEN_1)) {
+                if (card.toString().equals(OXYGEN_1) && count == 0) {
                     oxys[count] = (Oxygen) card;
                     count++;
-                    if (count == 2) {
-                        break;
-                    }
+                } else if ((card.toString().equals(OXYGEN_1) && count == 1)) {
+                    oxys[count] = (Oxygen) card;
+                    count++;
                 }
             }
             if (count != 2) {
@@ -74,8 +73,8 @@ public class GameDeck extends Deck {
             }
             remove(oxys[0]);
             remove(oxys[1]);
+            Collections.reverse(Arrays.asList(oxys));
             return oxys;
-
         }
 
     }

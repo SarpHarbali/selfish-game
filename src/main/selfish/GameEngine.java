@@ -107,8 +107,9 @@ public class GameEngine implements Serializable {
     }
 
     public void killPlayer(Astronaut corpse) {
-        corpses.add(corpse);
-        corpse.die();
+        this.corpses.add(corpse);
+        corpse.getHand().clear();
+        corpse.getActions().clear();
     }
 
     public static GameEngine loadState(String path) throws GameException {
@@ -168,14 +169,15 @@ public class GameEngine implements Serializable {
             }
         }
 
-        if (discardCount > 2) {
+        if (discardCount > 1) {
             oxies = gameDiscard.splitOxygen(dbl);
-        } else if (deckCount > 2) {
+        } else if (deckCount > 1) {
             oxies = gameDeck.splitOxygen(dbl);
         } else if (discardCount == 1 && deckCount == 1) {
             mergeDecks(gameDeck, gameDiscard);
             oxies = gameDeck.splitOxygen(dbl);
         } else {
+            mergeDecks(gameDeck, gameDiscard);
             throw new IllegalStateException();
         }
 
