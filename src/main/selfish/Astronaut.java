@@ -136,6 +136,9 @@ public class Astronaut implements Serializable {
         } else {
             actions.remove(card);
         }
+        if (oxygens.size() == 0) {
+            game.killPlayer(this);
+        }
     }
 
     public Card hack(String card) {
@@ -152,6 +155,8 @@ public class Astronaut implements Serializable {
 
             }
         }
+        if (oxygens.size() == 0) {
+            game.killPlayer(this);
         return ca;
     }
 
