@@ -69,6 +69,10 @@ public abstract class Deck implements Serializable {
         cards.remove(card);
     }
 
+    public void clear() {
+        cards.clear();
+    }
+
     public void shuffle(Random random) {
         Collections.shuffle(((LinkedList<Card>)cards), random);
     }

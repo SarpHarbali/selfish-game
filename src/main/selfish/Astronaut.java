@@ -61,6 +61,9 @@ public class Astronaut implements Serializable {
             }
             break;
         }
+        if (oxygens.size() == 0) {
+            game.killPlayer(this);
+        }
         return oxygenRemaining();
     }
 

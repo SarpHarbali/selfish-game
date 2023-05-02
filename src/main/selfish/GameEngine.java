@@ -49,6 +49,7 @@ public class GameEngine implements Serializable {
     public int endTurn() {
         startedTurn = false;
         ((LinkedList<Astronaut>)activePlayers).addFirst(currentPlayer);
+        currentPlayer = null;
         return activePlayers.size();
     }
 
@@ -106,9 +107,8 @@ public class GameEngine implements Serializable {
     }
 
     public void killPlayer(Astronaut corpse) {
-        corpse.die();
         corpses.add(corpse);
-        activePlayers.remove(corpse);
+        corpse.die();
     }
 
     public static GameEngine loadState(String path) throws GameException {
@@ -129,8 +129,8 @@ public class GameEngine implements Serializable {
     public void mergeDecks(Deck deck1, Deck deck2) {
         for (Card card : deck2.getCards()) {
             deck1.add(card);
-            deck2.remove(card);
         }
+        deck2.clear();
         deck1.shuffle(random);
     }
 
@@ -178,6 +178,7 @@ public class GameEngine implements Serializable {
         } else {
             throw new IllegalStateException();
         }
+
         return oxies;
     }
 

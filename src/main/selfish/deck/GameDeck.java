@@ -72,6 +72,8 @@ public class GameDeck extends Deck {
             if (count != 2) {
                 throw new IllegalStateException();
             }
+            remove(oxys[0]);
+            remove(oxys[1]);
             return oxys;
 
         }
