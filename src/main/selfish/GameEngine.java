@@ -10,7 +10,7 @@ public class GameEngine implements Serializable {
     private static final long serialVersionUID = -7253958447986048805L;
 
     private Collection<Astronaut> activePlayers = new LinkedList<>();
-    private List<Astronaut> corpses;
+    private List<Astronaut> corpses = new ArrayList<>();
     private Astronaut currentPlayer;
     private boolean hasStarted;
     private Random random;

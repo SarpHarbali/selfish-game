@@ -232,6 +232,11 @@ public class Astronaut implements Serializable {
     }
 
     public String toString(){
-        return name + " (is dead)";
+        if (this.isAlive()) {
+            return name;
+        } else{
+            return name + " (is dead)";
+        }
+
     }
 }
