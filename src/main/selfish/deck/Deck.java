@@ -47,13 +47,13 @@ public abstract class Deck implements Serializable {
 
     public int add(Card card) {
 
-        ((LinkedList<Card>)cards).addFirst(card);
+        ((LinkedList<Card>)cards).addLast(card);
         return cards.size();
     }
 
     protected int add(List<Card> cards) {
         for (Card card : cards) {
-            ((LinkedList<Card>)this.cards).addFirst(card);
+            ((LinkedList<Card>)this.cards).addLast(card);
         }
         return cards.size();
     }
@@ -62,7 +62,7 @@ public abstract class Deck implements Serializable {
         if (cards.size() == 0) {
             throw new IllegalStateException();
         }
-        return ((LinkedList<Card>)cards).removeFirst();
+        return ((LinkedList<Card>)cards).removeLast();
     }
 
     public void remove(Card card) {

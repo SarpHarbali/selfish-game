@@ -48,7 +48,9 @@ public class GameEngine implements Serializable {
 
     public int endTurn() {
         startedTurn = false;
-        ((LinkedList<Astronaut>)activePlayers).addFirst(currentPlayer);
+        if (currentPlayer.isAlive()) {
+            ((LinkedList<Astronaut>)activePlayers).addFirst(currentPlayer);
+        }
         currentPlayer = null;
         return activePlayers.size();
     }
@@ -63,7 +65,21 @@ public class GameEngine implements Serializable {
     }
 
     public List<Astronaut> getAllPlayers() {
-        return (LinkedList<Astronaut>) activePlayers;
+        List<Astronaut> ast = new ArrayList<>();
+        if (activePlayers.size() > 0) {
+            for (Astronaut a : activePlayers) {
+                ast.add(a);
+            }
+        }
+        if (corpses.size() > 0) {
+            for (Astronaut a : corpses) {
+                ast.add(a);
+            }
+        }
+        if (currentPlayer != null) {
+            ast.add(currentPlayer);
+        }
+        return ast;
     }
 
     public Astronaut getCurrentPlayer() {
@@ -107,6 +123,7 @@ public class GameEngine implements Serializable {
     }
 
     public void killPlayer(Astronaut corpse) {
+        this.activePlayers.remove(corpse);
         this.corpses.add(corpse);
         corpse.getHand().clear();
         corpse.getActions().clear();

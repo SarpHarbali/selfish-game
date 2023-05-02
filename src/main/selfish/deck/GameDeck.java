@@ -73,7 +73,6 @@ public class GameDeck extends Deck {
             }
             remove(oxys[0]);
             remove(oxys[1]);
-            Collections.reverse(Arrays.asList(oxys));
             return oxys;
         }
 
