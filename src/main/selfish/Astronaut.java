@@ -199,7 +199,11 @@ public class Astronaut implements Serializable {
     }
 
     public boolean hasMeltedEyeballs() {
-        return peekAtTrack().toString().equals(SpaceDeck.SOLAR_FLARE) || getTrack().size() == 1 || getTrack().size() == 6;
+
+        if (track.size() == 0) {
+            throw new IllegalArgumentException();
+        }
+        return peekAtTrack().toString().equals("Solar flare");
     }
 
     public boolean hasWon() {
