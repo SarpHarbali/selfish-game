@@ -8,22 +8,56 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
+ * class for gamedeck
  * @author Sarp
  * @version 03/05
  */
 public class GameDeck extends Deck {
     @Serial
     private static final long serialVersionUID = 1088614975085601733L;
+    /**
+     * hack suit
+     */
     public static final String HACK_SUIT = "Hack suit";
+    /**
+     * hole in suit
+     */
     public static final String HOLE_IN_SUIT = "Hole in suit";
+    /**
+     * laser blast
+     */
     public static final String LASER_BLAST = "Laser blast";
+    /**
+     * oxygen
+     */
     public static final String OXYGEN = "Oxygen";
+    /**
+     * oxygen 1
+     */
     public static final String OXYGEN_1 = "Oxygen(1)";
+    /**
+     * oxygen 2
+     */
     public static final String OXYGEN_2 = "Oxygen(2)";
+    /**
+     * siphon
+     */
     public static final String OXYGEN_SIPHON = "Oxygen syphon";
+    /**
+     * rock boost
+     */
     public static final String ROCKET_BOOSTER = "Rocket booster";
+    /**
+     * shield
+     */
     public static final String SHIELD = "Shield";
+    /**
+     * tether
+     */
     public static final String TETHER = "Tether";
+    /**
+     * tractor beam
+     */
     public static final String TRACTOR_BEAM = "Tractor beam";
 
     /**

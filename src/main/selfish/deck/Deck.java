@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * class for dec
  * @author Sarp
  * @version 03/05
  */

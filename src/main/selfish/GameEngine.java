@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * class for game engine
  * @author Sarp
  * @version 03/05
  */

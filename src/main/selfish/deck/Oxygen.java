@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * class for oxygen
  * @author Sarp
  * @version 03/05
  */
