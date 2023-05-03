@@ -40,14 +40,6 @@ public class Card implements Serializable, java.lang.Comparable {
         return description;
     }
 
-    /**
-     * compares to
-     * @param c which card to compare
-     * @return equal larger or smaller
-     */
-    public int compareTo(Card c) {
-        return this.name.compareTo(c.name);
-    }
 
     /**
      * another compare to
@@ -56,6 +48,6 @@ public class Card implements Serializable, java.lang.Comparable {
      */
     @Override
     public int compareTo(Object o) {
-        return 0;
+        return this.name.compareTo(((Card)o).name);
     }
 }

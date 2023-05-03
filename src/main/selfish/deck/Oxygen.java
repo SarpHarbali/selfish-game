@@ -39,21 +39,17 @@ public class Oxygen extends Card implements Serializable, java.lang.Comparable {
     }
 
     /**
-     * comparing two oxygens
-     * @param c which card to compare
-     * @return equal big or small
+     * comparing oxygens
+     * @param o the object to be compared.
+     * @return oxygen
      */
-    public int compareTo(Card c) {
-        if (c instanceof Oxygen) {
-            return Integer.compare(this.value, ((Oxygen) c).value);
-        }
-        return compareTo(c);
-    }
-
-
-
     @Override
     public int compareTo(Object o) {
-        return 0;
+        if (o instanceof Oxygen) {
+            return Integer.compare(this.value, ((Oxygen) o).value);
+        } else {
+            return super.compareTo(o);
+        }
+
     }
 }
