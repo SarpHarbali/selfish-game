@@ -28,7 +28,6 @@ public class Card implements Serializable, java.lang.Comparable {
      * to string method
      * @return String
      */
-    @Override
     public String toString() {
         return name;
     }
