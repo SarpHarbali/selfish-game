@@ -8,7 +8,13 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * astronaut class
+ * @author Sarp
+ * @version 03/05
+ */
 public class Astronaut implements Serializable {
+
     @Serial
     private static final long serialVersionUID = -6268567598864260237L;
     private String name;
@@ -17,15 +23,28 @@ public class Astronaut implements Serializable {
     private List<Oxygen> oxygens = new ArrayList<>();
     private Collection<Card> track = new LinkedList<>();
 
+    /**
+     * constructor for astronaut
+     * @param name name
+     * @param game game
+     */
     public Astronaut(String name, GameEngine game) {
         this.name = name;
         this.game = game;
     }
 
+    /**
+     * get oxygens
+     * @return returns oxygens
+     */
     public List<Oxygen> getOxygens() {
         return oxygens;
     }
 
+    /**
+     * adds card to hand
+     * @param card which card
+     */
     public void addToHand(Card card) {
         if (card instanceof Oxygen) {
             this.oxygens.add((Oxygen) card);
@@ -37,18 +56,19 @@ public class Astronaut implements Serializable {
         actions.sort(Comparator.comparing(Card::toString));
     }
 
+    /**
+     * adds to track
+     * @param card which card
+     */
     public void addToTrack(Card card) {
         track.add(card);
     }
 
-    public void die() {
-        actions.clear();
-        oxygens.clear();
-    }
-
-
+    /**
+     * breaths
+     * @return oxygen remaining
+     */
     public int breathe() {
-
         for (Oxygen oxygen : oxygens) {
             if (oxygen.getValue() == 1) {
                 if (oxygens.size() == 1) {
@@ -66,14 +86,28 @@ public class Astronaut implements Serializable {
         return oxygenRemaining();
     }
 
+    /**
+     * distance from ship
+     * @return int distance
+     */
     public int distanceFromShip() {
         return 6 - getTrack().size();
     }
 
+    /**
+     * get all the actions
+     * @return actions
+     */
     public List<Card> getActions() {
         return actions;
     }
 
+    /**
+     * get actions to string
+     * @param enumerated bool
+     * @param excludeShields bool
+     * @return String
+     */
     public String getActionsStr(boolean enumerated, boolean excludeShields) {
         List<Card> newAction = actions;
         if (excludeShields) {
@@ -102,6 +136,10 @@ public class Astronaut implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * get the hand
+     * @return list of cards
+     */
     public List<Card> getHand() {
         List<Card> hand = new ArrayList<>();
         hand.addAll(oxygens);
@@ -110,6 +148,10 @@ public class Astronaut implements Serializable {
         return hand;
     }
 
+    /**
+     * get hand string
+     * @return String of hand
+     */
     public String getHandStr() {
         StringBuilder sb = new StringBuilder();
 
@@ -141,10 +183,18 @@ public class Astronaut implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * gets track
+     * @return collection
+     */
     public Collection<Card> getTrack() {
         return track;
     }
 
+    /**
+     * hacks
+     * @param card which card
+     */
     public void hack(Card card) {
         if (!getHand().contains(card)) {
             throw new IllegalArgumentException();
@@ -165,10 +215,18 @@ public class Astronaut implements Serializable {
 
     }
 
+    /**
+     * clears track
+     */
     public void clearTrack() {
         track.clear();
     }
 
+    /**
+     * hacks string
+     * @param card which card string
+     * @return hacked card
+     */
     public Card hack(String card) {
         Card car = null;
         for (Card c : getHand()) {
@@ -194,10 +252,19 @@ public class Astronaut implements Serializable {
 
     }
 
+    /**
+     * checks for card
+     * @param card which card
+     * @return how many
+     */
     public int hasCard(String card) {
         return getHand().stream().filter(x -> x.toString().equals(card)).toList().size();
     }
 
+    /**
+     * has melted?
+     * @return true or false
+     */
     public boolean hasMeltedEyeballs() {
 
         if (track.size() == 0) {
@@ -206,14 +273,26 @@ public class Astronaut implements Serializable {
         return peekAtTrack().toString().equals("Solar flare");
     }
 
+    /**
+     * has the player won?
+     * @return true or false
+     */
     public boolean hasWon() {
         return track.size() == 6 && oxygens.size() > 0;
     }
 
+    /**
+     * are they alive?
+     * @return true or false
+     */
     public boolean isAlive() {
         return oxygens.size() > 0;
     }
 
+    /**
+     * laser blast card
+     * @return removed card
+     */
     public Card laserBlast() {
         if (track.size() < 1) {
             throw new IllegalArgumentException();
@@ -227,6 +306,10 @@ public class Astronaut implements Serializable {
 
     }
 
+    /**
+     * gets oxygen remaining
+     * @return integer
+     */
     public int oxygenRemaining() {
         int total = 0;
         for (Oxygen oxygen : oxygens) {
@@ -235,6 +318,10 @@ public class Astronaut implements Serializable {
         return total;
     }
 
+    /**
+     * peek at track
+     * @return Card
+     */
     public Card peekAtTrack() {
         if (getTrack().size() > 0) {
             Card c = ((LinkedList<Card>) getTrack()).get(getTrack().size() - 1);
@@ -244,6 +331,10 @@ public class Astronaut implements Serializable {
         }
     }
 
+    /**
+     * siphon card
+     * @return Oxygen card
+     */
     public Oxygen siphon() {
         Oxygen oxy = null;
         for (Oxygen oxygen : oxygens) {
@@ -267,6 +358,10 @@ public class Astronaut implements Serializable {
         return oxy;
     }
 
+    /**
+     * steal from hand
+     * @return Card
+     */
     public Card steal() {
         Card card = getHand().get(this.game.getRandom().nextInt(getHand().size()));
         if (getHand().size() == 1) {
@@ -280,6 +375,10 @@ public class Astronaut implements Serializable {
         return card;
     }
 
+    /**
+     * swaps track
+     * @param swapee person to swap with
+     */
     public void swapTrack(Astronaut swapee) {
         Collection<Card> tempSwaper = new LinkedList<>(track);
         Collection<Card> tempSwapee = swapee.getTrack();
@@ -293,6 +392,10 @@ public class Astronaut implements Serializable {
         }
     }
 
+    /**
+     * change to string
+     * @return String
+     */
     public String toString(){
         if (this.isAlive()) {
             return name;

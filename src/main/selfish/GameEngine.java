@@ -4,6 +4,10 @@ import selfish.deck.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * @author Sarp
+ * @version 03/05
+ */
 public class GameEngine implements Serializable {
 
     @Serial
@@ -21,9 +25,18 @@ public class GameEngine implements Serializable {
     private boolean startedTurn;
 
 
-
+    /**
+     * empty const
+     */
     private GameEngine() {}
 
+    /**
+     * constructor for game engine
+     * @param seed random
+     * @param gameDeck which deck
+     * @param spaceDeck which deck
+     * @throws GameException except
+     */
     public GameEngine(long seed, String gameDeck, String spaceDeck) throws GameException {
         random = new Random(seed);
         this.gameDeck = new GameDeck(gameDeck);
@@ -34,7 +47,12 @@ public class GameEngine implements Serializable {
         this.spaceDeck.shuffle(random);
     }
 
-
+    /**
+     * adds players
+     * @param player which player
+     * @return how many players
+     * @throws IllegalStateException except
+     */
     public int addPlayer(String player) throws IllegalStateException {
         if (hasStarted || getFullPlayerCount() == 5) {
             throw new IllegalStateException();
@@ -46,6 +64,10 @@ public class GameEngine implements Serializable {
 
     }
 
+    /**
+     * ends turn
+     * @return no of players
+     */
     public int endTurn() {
         startedTurn = false;
         if (currentPlayer.isAlive()) {
@@ -55,6 +77,10 @@ public class GameEngine implements Serializable {
         return activePlayers.size();
     }
 
+    /**
+     * is game over?
+     * @return bool
+     */
     public boolean gameOver() {
         for (Astronaut astronaut : activePlayers) {
             if (astronaut.hasWon()) {
@@ -64,6 +90,10 @@ public class GameEngine implements Serializable {
         return activePlayers.size() == 0;
     }
 
+    /**
+     * get all the players
+     * @return list of players
+     */
     public List<Astronaut> getAllPlayers() {
         List<Astronaut> ast = new ArrayList<>();
         if (activePlayers.size() > 0) {
@@ -82,30 +112,58 @@ public class GameEngine implements Serializable {
         return ast;
     }
 
+    /**
+     * get current player
+     * @return the player
+     */
     public Astronaut getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * get full count
+     * @return no of players
+     */
     public int getFullPlayerCount() {
         return getAllPlayers().size();
     }
 
+    /**
+     * get game deck
+     * @return gamedeck
+     */
     public GameDeck getGameDeck() {
         return this.gameDeck;
     }
 
+    /**
+     * get game discard
+     * @return game discard
+     */
     public GameDeck getGameDiscard() {
         return this.gameDiscard;
     }
 
+    /**
+     * get space deck
+     * @return space deck
+     */
     public SpaceDeck getSpaceDeck() {
         return this.spaceDeck;
     }
 
+    /**
+     * get space discard
+     * @return space discard
+     */
     public SpaceDeck getSpaceDiscard() {
         return this.spaceDiscard;
     }
 
+    /**
+     * get the winner
+     * @return winner
+     */
     public Astronaut getWinner() {
         for (Astronaut astronaut : activePlayers) {
             if (astronaut.hasWon()) {
@@ -115,6 +173,10 @@ public class GameEngine implements Serializable {
         return null;
     }
 
+    /**
+     * kill the player
+     * @param corpse which player to kill
+     */
     public void killPlayer(Astronaut corpse) {
         this.activePlayers.remove(corpse);
         this.corpses.add(corpse);
@@ -122,6 +184,12 @@ public class GameEngine implements Serializable {
         corpse.getActions().clear();
     }
 
+    /**
+     * loads cards
+     * @param path uses path
+     * @return the whole engine
+     * @throws GameException except
+     */
     public static GameEngine loadState(String path) throws GameException {
         try {
             FileInputStream fin = new FileInputStream(path);
@@ -137,6 +205,11 @@ public class GameEngine implements Serializable {
 
     }
 
+    /**
+     * merge two decks
+     * @param deck1 deck
+     * @param deck2 discard
+     */
     public void mergeDecks(Deck deck1, Deck deck2) {
         for (Card card : deck2.getCards()) {
             deck1.add(card);
@@ -145,10 +218,19 @@ public class GameEngine implements Serializable {
         deck1.shuffle(random);
     }
 
+    /**
+     * get random
+     * @return random
+     */
     public Random getRandom() {
         return random;
     }
 
+    /**
+     * save the state
+     * @param path to where
+     * @throws GameException except
+     */
     public void saveState(String path) throws GameException {
         try {
             FileOutputStream fout = new FileOutputStream(path);
@@ -161,6 +243,11 @@ public class GameEngine implements Serializable {
         }
     }
 
+    /**
+     * splits the oxygen
+     * @param dbl double ox
+     * @return list of single ox
+     */
     public Oxygen[] splitOxygen(Oxygen dbl) {
         Oxygen[] oxies = new Oxygen[2];
 
@@ -194,6 +281,9 @@ public class GameEngine implements Serializable {
         return oxies;
     }
 
+    /**
+     * start the game
+     */
     public void startGame() {
         if (getFullPlayerCount() == 1 || getFullPlayerCount() == 6) {
             throw new IllegalStateException();
@@ -225,10 +315,17 @@ public class GameEngine implements Serializable {
 
     }
 
+    /**
+     * get all the active players
+     * @return ast collection
+     */
     public Collection<Astronaut> getActivePlayers() {
         return activePlayers;
     }
 
+    /**
+     * starts turn for astronaut
+     */
     public void startTurn() {
         if (gameOver() || !hasStarted || startedTurn) {
             throw new IllegalStateException();
@@ -241,6 +338,11 @@ public class GameEngine implements Serializable {
 
     }
 
+    /**
+     * travel in space
+     * @param traveller which player
+     * @return space card
+     */
     public Card travel(Astronaut traveller) {
         if (traveller.getOxygens().size() < 2) {
             throw new IllegalStateException();

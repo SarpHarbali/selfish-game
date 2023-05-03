@@ -7,6 +7,10 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * @author Sarp
+ * @version 03/05
+ */
 public class GameDeck extends Deck {
     @Serial
     private static final long serialVersionUID = 1088614975085601733L;
@@ -22,9 +26,16 @@ public class GameDeck extends Deck {
     public static final String TETHER = "Tether";
     public static final String TRACTOR_BEAM = "Tractor beam";
 
-
+    /**
+     * empty const
+     */
     public GameDeck() {}
 
+    /**
+     * gamedeck const
+     * @param path take path
+     * @throws GameException except
+     */
     public GameDeck(String path) throws GameException {
         super.add(loadCards(path));
         for(int i = 0; i<10; i++) {
@@ -35,6 +46,11 @@ public class GameDeck extends Deck {
         }
     }
 
+    /**
+     * draw oxygen
+     * @param value which oxygen value
+     * @return Oxygen
+     */
     public Oxygen drawOxygen(int value) {
         Oxygen oxygen = null;
         for (Card card : getCards()) {
@@ -50,6 +66,12 @@ public class GameDeck extends Deck {
         return oxygen;
     }
 
+    /**
+     * split the oxygen
+     * @param dbl the double oxygen card
+     * @return list of single oxygens
+     * @throws IllegalStateException except
+     */
     public Oxygen[] splitOxygen(Oxygen dbl) throws IllegalStateException {
         if (dbl.getValue() != 2) {
             throw new IllegalArgumentException();
