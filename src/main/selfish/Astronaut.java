@@ -106,6 +106,7 @@ public class Astronaut implements Serializable {
         List<Card> hand = new ArrayList<>();
         hand.addAll(oxygens);
         hand.addAll(actions);
+        hand.sort(Comparator.comparing(Card::toString));
         return hand;
     }
 
@@ -198,7 +199,7 @@ public class Astronaut implements Serializable {
     }
 
     public boolean hasMeltedEyeballs() {
-        return peekAtTrack().toString().equals(SpaceDeck.SOLAR_FLARE);
+        return peekAtTrack().toString().equals(SpaceDeck.SOLAR_FLARE) || getTrack().size() == 1 || getTrack().size() == 6;
     }
 
     public boolean hasWon() {
@@ -232,7 +233,8 @@ public class Astronaut implements Serializable {
 
     public Card peekAtTrack() {
         if (getTrack().size() > 0) {
-            return ((LinkedList<Card>) getTrack()).get(getTrack().size() - 1);
+            Card c = ((LinkedList<Card>) getTrack()).get(getTrack().size() - 1);
+            return c;
         } else {
             return null;
         }
@@ -254,6 +256,9 @@ public class Astronaut implements Serializable {
                 oxygens.remove(oxy);
             }
             break;
+        }
+        if (oxygens.size() == 0) {
+            game.killPlayer(this);
         }
         return oxy;
     }

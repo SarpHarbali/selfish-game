@@ -76,7 +76,7 @@ public class GameEngine implements Serializable {
                 ast.add(a);
             }
         }
-        if (currentPlayer != null) {
+        if (currentPlayer != null && !corpses.contains(currentPlayer)) {
             ast.add(currentPlayer);
         }
         return ast;
@@ -87,14 +87,7 @@ public class GameEngine implements Serializable {
     }
 
     public int getFullPlayerCount() {
-        int total = 0;
-        if (activePlayers.size() > 0) {
-            total += activePlayers.size();
-        }
-        if (corpses.size() > 0) {
-            total += corpses.size();
-        }
-        return total;
+        return getAllPlayers().size();
     }
 
     public GameDeck getGameDeck() {
@@ -255,6 +248,9 @@ public class GameEngine implements Serializable {
             traveller.breathe();
             traveller.breathe();
             Card card = this.spaceDeck.draw();
+            if (card.toString().equals(SpaceDeck.GRAVITATIONAL_ANOMALY)) {
+                ((LinkedList<Card>)traveller.getTrack()).remove(traveller.getTrack().size() -1);
+            }
             traveller.addToTrack(card);
             return card;
 
